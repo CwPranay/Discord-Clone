@@ -5,6 +5,8 @@ import "./globals.css";
 import { ThemeProvider } from "../components/provider/theme-provider";
 import { cn } from "@/lib/utils";
 import { ModalProvider } from "@/components/provider/modal-provider";
+import { SocketProvider } from "@/components/provider/socket-provider";
+import { QueryProvider } from "@/components/provider/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,20 +30,24 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en" suppressHydrationWarning className="h-full">
-      <body
-        className={ cn(`${geistSans.variable} ${geistMono.variable} h-full antialiased  bg-white dark:bg-[#313338] `  )}
-      >
-      <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem={false}
-      storageKey="discord-theme">
-        <ModalProvider/>
-       {children}
-        </ThemeProvider>
-      </body>
-    </html>
+      <html lang="en" suppressHydrationWarning className="h-full">
+        <body
+          className={cn(`${geistSans.variable} ${geistMono.variable} h-full antialiased  bg-white dark:bg-[#313338] `)}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            storageKey="discord-theme">
+            <SocketProvider>
+              <ModalProvider />
+             <QueryProvider>
+              {children}
+              </QueryProvider>
+            </SocketProvider>
+          </ThemeProvider>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

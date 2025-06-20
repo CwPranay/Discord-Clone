@@ -1,44 +1,44 @@
 import { ServerSidebar } from "@/components/servers/server-sidebar";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { redirect } from "next/navigation"; // ✅ Use this instead of redirectToSignIn
+import { redirect } from "next/navigation";
 
-const ServerIdLayout = async ({
-    children,
-    params,
-}: {
-    children: React.ReactNode;
-    params: { serverId: string };
-}) => {
-    const profile = await currentProfile();
+interface LayoutProps {
+  children: React.ReactNode;
+  params: { serverId: string };
+}
 
-    if (!profile) {
+const ServerIdLayout = async ({ children, params }: LayoutProps) => {
+  const profile = await currentProfile();
 
-        return redirect("/sign-in");
-    }
-    const server = await db.server.findUnique({
-        where: {
-            id: params.serverId,
-            members: {
-                some: {
-                    profileId: profile.id
-                }
-            }
-        }
-    });
+  if (!profile) {
+    return redirect("/sign-in");
+  }
 
-    if (!server) {
-        return redirect("/")
-    }
+  // ✅ Use findFirst instead of findUnique and filter with both id and member
+  const server = await db.server.findFirst({
+    where: {
+      id: params.serverId,
+      members: {
+        some: {
+          profileId: profile.id,
+        },
+      },
+    },
+  });
 
-    return <div className="h-full">
-        <div className="hidden fixed md:flex h-full w-60 z-20 inset-y-0 flex-col">
-            <ServerSidebar serverId={params.serverId}/>
+  if (!server) {
+    return redirect("/");
+  }
 
-        </div>
-        <main className="h-full md:pl-60">
-
-            {children}</main></div>;
+  return (
+    <div className="h-full">
+      <div className="hidden fixed md:flex h-full w-60 z-20 inset-y-0 flex-col">
+        <ServerSidebar serverId={params.serverId} />
+      </div>
+      <main className="h-full md:pl-60">{children}</main>
+    </div>
+  );
 };
 
 export default ServerIdLayout;

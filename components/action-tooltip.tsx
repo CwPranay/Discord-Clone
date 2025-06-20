@@ -16,12 +16,12 @@ interface ActionTooltipProps {
 
 export const ActionTooltip = ({ label, children, side, align }: ActionTooltipProps) => {
 return (
-    <TooltipProvider>
-        <Tooltip delayDuration={50}>
-            <TooltipTrigger asChild>
+    <TooltipProvider >
+        <Tooltip  delayDuration={50}>
+            <TooltipTrigger  asChild>
                 {children}
             </TooltipTrigger>
-            <TooltipContent side={side} align={align}>
+            <TooltipContent  side={side} align={align}>
                 <p className="font-semibold text-sm capitalize">{label.toLowerCase()}
 
                 </p>
