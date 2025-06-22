@@ -119,10 +119,14 @@ export const ChatItem = ({
 
 
     useEffect(() => {
-        form.reset({
+        if (!isEditing) {
+             form.reset({
             content: content,
         })
-    }, [content])
+           
+        }
+       
+    }, [content,isEditing])
 
     const isAdmin = currentMember.role === MemberRole.ADMIN;
     const isModerator = currentMember.role === MemberRole.MODERATOR;

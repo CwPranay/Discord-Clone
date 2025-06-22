@@ -1,12 +1,15 @@
+import { ChannelType } from "@prisma/client";
 import { ChatHeader } from "@/components/chats/chat-header";
 import { ChatInput } from "@/components/chats/chat-input";
 import { ChatMessages } from "@/components/chats/chat-messages";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { RedirectToSignIn } from "@clerk/nextjs";
-import { Server } from "lucide-react";
+
+
 
 import { redirect } from "next/navigation";
+import { MediaRoom } from "@/components/media-room";
 
 
 interface ChannelIdPageProps {
@@ -50,6 +53,8 @@ const ChannelIdPage = async ({
             name={channel.name}
             serverId={channel.serverId}
             type="channel"/>
+            {channel.type=== ChannelType.TEXT && (
+                <>
             <ChatMessages
              member={member}
              name={channel.name}
@@ -74,6 +79,22 @@ const ChannelIdPage = async ({
                 serverId:channel.serverId,
              }}
             />
+            
+           </> )}
+           {channel.type===ChannelType.AUDIO && (
+            <MediaRoom
+            chatId={channel.id}
+            video={false}
+            audio={true}
+            />
+           )}
+           {channel.type===ChannelType.VIDEO && (
+            <MediaRoom
+            chatId={channel.id}
+            video={true}
+            audio={true}
+            />
+           )}
 
         </div>
     )
