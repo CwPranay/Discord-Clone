@@ -2,13 +2,13 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-interface InviteCodePageProps {
+type InviteCodePageProps = {
   params: {
     inviteCode: string;
   };
-}
+};
 
-const InviteCodePage = async ({ params }: InviteCodePageProps) => {
+export default async function InviteCodePage({ params }: InviteCodePageProps) {
   const profile = await currentProfile();
 
   if (!profile) {
@@ -19,7 +19,6 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
     return redirect("/");
   }
 
-  // Check if the user is already a member of the server
   const existingServer = await db.server.findFirst({
     where: {
       inviteCode: params.inviteCode,
@@ -35,7 +34,6 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
     return redirect(`/servers/${existingServer.id}`);
   }
 
-  // Find the server by invite code to make sure it exists
   const serverToJoin = await db.server.findUnique({
     where: {
       inviteCode: params.inviteCode,
@@ -43,10 +41,9 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   });
 
   if (!serverToJoin) {
-    return redirect("/"); // or show a 404/error page
+    return redirect("/");
   }
 
-  // Add the current profile as a member
   const server = await db.server.update({
     where: {
       id: serverToJoin.id,
@@ -63,6 +60,4 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   });
 
   return redirect(`/servers/${server.id}`);
-};
-
-export default InviteCodePage;
+}
