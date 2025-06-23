@@ -1,4 +1,4 @@
-"use client";
+
 import {ChannelType} from "@prisma/client";
 
 import { ChatHeader } from "@/components/chats/chat-header";
