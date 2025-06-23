@@ -5,13 +5,13 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 // ✅ CORRECT typing
-type InviteCodePageProps = {
-  params: {
-    inviteCode: string;
+type PageParams = {
+  params:{
+    inviteCode: string
   };
 };
 
-export default async function InviteCodePage({ params }: InviteCodePageProps) {
+export default async function InviteCodePage({ params }:PageParams) {
   const profile = await currentProfile();
 
   if (!profile) {

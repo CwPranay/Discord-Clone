@@ -89,7 +89,7 @@ export const InviteModal = () => {
                     className="text-sm text-zinc-500 mt-4">
 
 
-                        Generate a new link
+                         a new link
                         <RefreshCw className="w-4 h-4 ml-2"/>
                     </Button>
                 </div>
