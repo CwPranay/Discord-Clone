@@ -1,20 +1,24 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
+import { type Metadata } from "next";
 
-type Props = {
-  params: { inviteCode: string };
-};
+// ✅ This is the correct type for route segment props in App Router
+interface InviteCodePageProps {
+  params: {
+    inviteCode: string;
+  };
+}
 
-export default async function InviteCodePage({ params }: Props) {
+const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   const profile = await currentProfile();
 
   if (!profile) {
-    return redirect("/sign-in");
+    redirect("/sign-in");
   }
 
   if (!params.inviteCode) {
-    return redirect("/");
+    redirect("/");
   }
 
   const existingServer = await db.server.findFirst({
@@ -29,7 +33,7 @@ export default async function InviteCodePage({ params }: Props) {
   });
 
   if (existingServer) {
-    return redirect(`/servers/${existingServer.id}`);
+    redirect(`/servers/${existingServer.id}`);
   }
 
   const serverToJoin = await db.server.findUnique({
@@ -39,7 +43,7 @@ export default async function InviteCodePage({ params }: Props) {
   });
 
   if (!serverToJoin) {
-    return redirect("/");
+    redirect("/");
   }
 
   const server = await db.server.update({
@@ -48,14 +52,12 @@ export default async function InviteCodePage({ params }: Props) {
     },
     data: {
       members: {
-        create: [
-          {
-            profileId: profile.id,
-          },
-        ],
+        create: [{ profileId: profile.id }],
       },
     },
   });
 
-  return redirect(`/servers/${server.id}`);
-}
+  redirect(`/servers/${server.id}`);
+};
+
+export default InviteCodePage;
