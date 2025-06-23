@@ -1,16 +1,17 @@
+// app/(invite)/(routes)/invite/[inviteCode]/page.tsx
+
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
-import { type Metadata } from "next";
 
-// ✅ This is the correct type for route segment props in App Router
-interface InviteCodePageProps {
+// ✅ CORRECT typing
+type InviteCodePageProps = {
   params: {
     inviteCode: string;
   };
-}
+};
 
-const InviteCodePage = async ({ params }: InviteCodePageProps) => {
+export default async function InviteCodePage({ params }: InviteCodePageProps) {
   const profile = await currentProfile();
 
   if (!profile) {
@@ -58,6 +59,4 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   });
 
   redirect(`/servers/${server.id}`);
-};
-
-export default InviteCodePage;
+}
