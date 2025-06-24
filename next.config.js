@@ -3,7 +3,10 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  devIndicators: false,
+ devIndicators: {
+    buildActivity:false
+  },
+  
   images: {
     domains: ["utfs.io"],
   },
