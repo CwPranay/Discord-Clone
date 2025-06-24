@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { ThemeProvider } from "../components/provider/theme-provider";
@@ -8,13 +8,8 @@ import { ModalProvider } from "@/components/provider/modal-provider";
 import { SocketProvider } from "@/components/provider/socket-provider";
 import { QueryProvider } from "@/components/provider/query-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -32,7 +27,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning className="h-full">
         <body
-          className={cn(`${geistSans.variable} ${geistMono.variable} h-full antialiased  bg-white dark:bg-[#313338] `)}
+          className={cn(`${inter.variable} h-full antialiased bg-white dark:bg-[#313338]`)}
         >
           <ThemeProvider
             attribute="class"
@@ -41,8 +36,8 @@ export default function RootLayout({
             storageKey="discord-theme">
             <SocketProvider>
               <ModalProvider />
-             <QueryProvider>
-              {children}
+              <QueryProvider>
+                {children}
               </QueryProvider>
             </SocketProvider>
           </ThemeProvider>
