@@ -8,22 +8,6 @@ html,body,:root{
 
 }
 
-video {
-  object-fit: contain !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-}
-
-.lk-video-track,
-.lk-participant-tile {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
 
 
 .cl-avatarBox {
