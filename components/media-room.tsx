@@ -61,10 +61,8 @@ export const MediaRoom = ({
 
 
         >
-            <div className="w-full h-full flex items-center justify-center overflow-hidden">
-                <div className="w-full h-full max-h-[calc(100vh-100px)]">
-                    <VideoConference />
-                </div>
+            <div className="w-full h-[calc(100vh-60px)] flex items-center justify-center bg-black overflow-hidden">
+                <VideoConference />
             </div>
         </LiveKitRoom>
     )
