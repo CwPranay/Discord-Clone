@@ -61,7 +61,7 @@ export const MediaRoom=({
            
           
             >
-            <VideoConference />
+            <VideoConference className="w-full h-auto max-h-[calc(100vh-100px)] object-contain" />
         </LiveKitRoom>
     )
 
